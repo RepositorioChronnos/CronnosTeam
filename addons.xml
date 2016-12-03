@@ -153,11 +153,11 @@
 </addon>
 
 
-<addon id="repository.CronnosTeam" name="CronnosTeam Repositorio oficial" version="2.1.0" provider-name="CronnosTeam
+<addon id="repository.CronnosTeam" name="CronnosTeam Repositorio oficial" version="2.1.1" provider-name="CronnosTeam">
 	<extension point="xbmc.addon.repository" name="CronnosTeam Repositorio oficial">
-		<info compressed="false">https://raw.github.com/RepositorioChronnos/CronnosTeam/master/addons.xml</info>
-		<checksum>https://raw.github.com/RepositorioChronnos/CronnosTeam/master/addons.xml.md5</checksum>
-		<datadir zip="true">https://raw.github.com/RepositorioChronnos/CronnosTeam/master/zips</datadir>
+		<info compressed="false">https://raw.githubusercontent.com/RepositorioChronnos/CronnosTeam/master/addons.xml</info>
+		<checksum>https://raw.githubusercontent.com/RepositorioChronnos/CronnosTeam/master/addons.xml.md5</checksum>
+		<datadir zip="true">https://raw.githubusercontent.com/RepositorioChronnos/CronnosTeam/master/zips</datadir>
 	</extension>
 	<extension point="xbmc.addon.metadata">
 		<summary>Repositorio Oficial CronnosTeam</summary>

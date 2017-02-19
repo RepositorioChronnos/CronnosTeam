@@ -12,9 +12,9 @@
     <import addon="script.module.httplib2" />
     <import addon="script.module.youtube.dl" optional="true"/>
     <import addon="plugin.video.youtube" optional="true" />
-    <import addon="script.module.urlresolver" optional="true"/>
-    <import addon="script.module.simplejson" />    
-     <import addon="script.module.livestreamer" optional="true"/>
+    <import addon="script.module.urlresolver" version="1.0.0"/>
+    <import addon="script.module.simplejson" version="3.3.0"/>  
+    <import addon="script.module.livestreamer" optional="true"/>
   </requires>
   <extension point="xbmc.python.pluginsource" library="default.py">
     <provides>video</provides>

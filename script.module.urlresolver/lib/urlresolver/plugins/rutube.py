@@ -20,50 +20,38 @@
 """
 
 import re
-import urllib
-import HTMLParser
-from lib import helpers
+import json
 from urlresolver import common
 from urlresolver.resolver import UrlResolver, ResolverError
 
 class RuTubeResolver(UrlResolver):
     name = "rutube.ru"
     domains = ['rutube.ru']
-    pattern = '(?://|\.)(rutube\.ru)/play/embed/(\d*)'
+    pattern = '(?://|\.)(rutube\.ru)/(?:play/embed/|video/)([0-9a-zA-Z]+)'
 
     def __init__(self):
         self.net = common.Net()
 
     def get_media_url(self, host, media_id):
-        web_url = self.get_url(host, media_id)
+        headers = {
+            'User-Agent': common.ANDROID_USER_AGENT
+        }
 
-        response = self.net.http_GET(web_url)
+        json_url = 'http://rutube.ru/api/play/options/%s/?format=json&no_404=true' % media_id
 
-        html = response.content
+        json_data = self.net.http_GET(json_url, headers=headers).content
+        json_data = json.loads(json_data)['video_balancer']
+        url = json_data.get('m3u8')
+        if not url == None: return url
 
-        if html:
-            m3u8 = re.compile('video_balancer&quot;:\s*{.*?&quot;m3u8&quot;:\s*&quot;(.*?)&quot;}').findall(html)[0]
-            m3u8 = HTMLParser.HTMLParser().unescape(m3u8)
-            response = self.net.http_GET(m3u8)
-            m3u8 = response.content
-            
-            sources = re.compile('\n(.+?i=(.+?))\n').findall(m3u8)
-            sources = sources[::-1]
-            sources = [sublist[::-1] for sublist in sources]
-            
-            source = helpers.pick_source(sources, self.get_setting('auto_pick') == 'true')
-            source = source.encode('utf-8')
-
-            if source:
-                return source
+        json_url = json_data.get('json')
+        json_data = self.net.http_GET(json_url, headers=headers).content
+        try: return json.loads(json_data)['results'][0]
+        except: pass
 
         raise ResolverError('No playable video found.')
 
     def get_url(self, host, media_id):
         return 'http://rutube.ru/play/embed/%s' % media_id
 
-    @classmethod
-    def get_settings_xml(cls):
-        xml = super(cls, cls).get_settings_xml()
-        xml.append('<setting id="%s_auto_pick" type="bool" label="Automatically pick best quality" default="false" visible="true"/>' % (cls.__name__))
-        return xml
+

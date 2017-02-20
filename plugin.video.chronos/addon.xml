@@ -12,7 +12,7 @@
     <import addon="script.module.httplib2" />
     <import addon="script.module.youtube.dl" optional="true"/>
     <import addon="plugin.video.youtube" optional="true" />
-    <import addon="script.module.urlresolver" version="1.0.0"/>
+    <import addon="script.module.urlresolver" version="3.0.21"/>
     <import addon="script.module.simplejson" version="3.3.0"/>  
     <import addon="script.module.livestreamer" optional="true"/>
   </requires>
